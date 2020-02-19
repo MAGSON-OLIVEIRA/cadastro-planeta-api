@@ -1,4 +1,4 @@
-package com.mdo.PlanetaService.api;
+package com.mdo.cadastroplaneta.api;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
