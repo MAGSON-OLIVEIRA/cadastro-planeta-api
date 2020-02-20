@@ -1,5 +1,6 @@
 package com.mdo.cadastroplaneta.api.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.mdo.cadastroplaneta.api.entities.Planeta;
@@ -18,5 +19,11 @@ public interface PlanetaService {
 	 * @return
 	 */
 	Planeta persistir(Planeta planeta);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	List<Planeta> list();
 
 }

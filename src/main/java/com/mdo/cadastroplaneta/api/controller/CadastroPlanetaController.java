@@ -1,5 +1,7 @@
 package com.mdo.cadastroplaneta.api.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +59,21 @@ public class CadastroPlanetaController {
 		response.setData(extractedDto(planeta));
 		return ResponseEntity.ok(response);
 	}
-
+	
+	@GetMapping("/list")
+	public ResponseEntity<Response<List<PlanetaDto>>> list() {
+		Response<List<PlanetaDto>> list = new Response<List<PlanetaDto>>();
+		List<Planeta> listPlaneta = this.planetaService.list();
+		List<PlanetaDto> listDto = extractedListPlaneta(listPlaneta);
+		list.setData(listDto);
+		return ResponseEntity.ok(list);
+	}
+	
+	private List<PlanetaDto> extractedListPlaneta(List<Planeta> listPlaneta) {
+		List<PlanetaDto> listDto = new ArrayList<PlanetaDto>();
+		listPlaneta.forEach(planeta -> listDto.add(extractedDto(planeta)));
+		return listDto;
+	}
 
 	private PlanetaDto extractedDto(Planeta planeta) {
 		PlanetaDto planetaDto = new PlanetaDto();

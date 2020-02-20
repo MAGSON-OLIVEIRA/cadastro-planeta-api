@@ -1,5 +1,6 @@
 package com.mdo.cadastroplaneta.api.services.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -33,5 +34,13 @@ public class PlanetaServiceImpl  implements PlanetaService {
 		log.info("salvar nome na base {} ", planeta.toString());
 		return (Planeta) this.planetaRepository.insert(planeta);
 	}
+
+	@Override
+	public List<Planeta> list() {
+		log.info("lista de planeta");
+		return this.planetaRepository.findAll();
+	}
+	
+	
 
 }
