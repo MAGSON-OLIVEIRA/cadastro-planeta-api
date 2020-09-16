@@ -46,7 +46,6 @@ public class CadastroPlanetaController {
 	public ResponseEntity<Response<PlanetaDto>> cadastrar(@Valid @RequestBody PlanetaDto dto,
 			BindingResult result) {
 		Response<PlanetaDto> response = new Response<PlanetaDto>();
-		dto.setQuantidadeDeAparicoesStarWars(apiGerraNasEstrelasServiceRest.getListaFilmesGerraNasEstrelas(dto.getNome()));
 		Planeta planeta = new Planeta();
 		extractedPlaneta(dto, planeta);
 		validarDadosExistentes(dto, result);
@@ -55,6 +54,8 @@ public class CadastroPlanetaController {
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
+		
+		planeta.setReturnStarWars(apiGerraNasEstrelasServiceRest.getListaFilmesGerraNasEstrelas(dto.getNome()));
 		this.planetaService.persistir(planeta);
 		response.setData(extractedDto(planeta));
 		return ResponseEntity.ok(response);
@@ -80,7 +81,8 @@ public class CadastroPlanetaController {
 		planetaDto.setClima(planeta.getClima());
 		planetaDto.setId(planeta.getId());
 		planetaDto.setNome(planeta.getNome());
-		planetaDto.setQuantidadeDeAparicoesStarWars(planeta.getQuantidadeDeAparicoesStarWars());
+		planetaDto.setQuantidadeDeAparicoesStarWars(planeta.getReturnStarWars().getQtdFilmes());
+		planetaDto.setStatusAparicoesStarWars(planeta.getReturnStarWars().isStatus());
 		planeta.getTerrenoOpt().ifPresent(var -> planetaDto.setTerreno(Optional.of(var)));
 		return planetaDto;
 	}
@@ -88,8 +90,7 @@ public class CadastroPlanetaController {
 	private void extractedPlaneta(PlanetaDto planetaDto, Planeta planeta) {
 		planeta.setClima(planetaDto.getClima());
 		planeta.setNome(planetaDto.getNome());
-		planeta.setQuantidadeDeAparicoesStarWars(planetaDto.getQuantidadeDeAparicoesStarWars());
-		planetaDto.getTerreno().ifPresent(valor -> planeta.setTerreno(valor));
+		planetaDto.getTerreno().ifPresent(var -> planeta.setTerreno(var));
 	}
 
 	private void validarDadosExistentes(PlanetaDto dto, BindingResult result) {

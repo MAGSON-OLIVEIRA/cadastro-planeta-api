@@ -16,6 +16,14 @@ public class PlanetaDto {
 	
 	private Integer quantidadeDeAparicoesStarWars; 
 	
+	private boolean statusAparicoesStarWars = false;
+	
+	public boolean isStatusAparicoesStarWars() {
+		return statusAparicoesStarWars;
+	}
+	public void setStatusAparicoesStarWars(boolean statusAparicoesStarWars) {
+		this.statusAparicoesStarWars = statusAparicoesStarWars;
+	}
 	public String getId() {
 		return id;
 	}

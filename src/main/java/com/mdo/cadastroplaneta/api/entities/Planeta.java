@@ -25,17 +25,12 @@ public class Planeta implements Serializable {
 	
 	
 	private String id;
-
 	private Date dataCriacao;
 	private Date dataAtualizacao;
 	private String nome;
 	private String clima;
 	private String terreno;
-	private Integer quantidadeDeAparicoesStarWars; 
-	
-	public Planeta() {
-		
-	}
+	private ReturnStarWars returnStarWars = new ReturnStarWars();
 	
 	@Transient
 	public Optional<String> getTerrenoOpt() {
@@ -67,7 +62,18 @@ public class Planeta implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 	
-	
+	public ReturnStarWars getReturnStarWars() {
+		return returnStarWars;
+	}
+
+	public void setReturnStarWars(ReturnStarWars returnStarWars) {
+		this.returnStarWars = returnStarWars;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@PreUpdate
 	public void preUpdate() {
 		dataAtualizacao = new Date();
@@ -107,22 +113,10 @@ public class Planeta implements Serializable {
 		this.terreno = terreno;
 	}
 
-	@Column(name="dataAtualizacao", nullable = false)
-	public Integer getQuantidadeDeAparicoesStarWars() {
-		return quantidadeDeAparicoesStarWars;
-	}
-
-	public void setQuantidadeDeAparicoesStarWars(Integer quantidadeDeAparicoesStarWars) {
-		this.quantidadeDeAparicoesStarWars = quantidadeDeAparicoesStarWars;
-	}
-
 	@Override
 	public String toString() {
 		return "Planeta [id=" + id + ", dataCriacao=" + dataCriacao + ", dataAtualizacao=" + dataAtualizacao + ", nome="
-				+ nome + ", clima=" + clima + ", terreno=" + terreno + ", quantidadeDeAparicoesStarWars="
-				+ quantidadeDeAparicoesStarWars + "]";
+				+ nome + ", clima=" + clima + ", terreno=" + terreno + ", returnStarWars=" + returnStarWars + "]";
 	}
 
-
-	
 }
